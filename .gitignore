@@ -1,2 +1,4 @@
 .idea/
 stock_database_services.iml
+
+target/
