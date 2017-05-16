@@ -22,6 +22,13 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
         </dependency>
+
+        <!-- jsonapi-converter -->
+        <dependency>
+            <groupId>com.github.jasminb</groupId>
+            <artifactId>jsonapi-converter</artifactId>
+            <version>0.7</version>
+        </dependency>
     </dependencies>
 
 </project>
