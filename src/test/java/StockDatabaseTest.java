@@ -2,8 +2,10 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class StockDatabaseTest {
     //   http://jsonapi.org/examples/     <---- example of including resources in url
 
