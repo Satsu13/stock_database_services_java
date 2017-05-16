@@ -1,4 +1,4 @@
 package database;
 
-public class Version {
+public class Version extends BaseTable {
 }

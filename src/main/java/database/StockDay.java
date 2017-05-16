@@ -1,4 +1,4 @@
 package database;
 
-public class StockDay {
+public class StockDay extends BaseTable {
 }

@@ -1,4 +1,4 @@
 package database;
 
-public class StockHistory {
+public class StockHistory extends BaseTable {
 }

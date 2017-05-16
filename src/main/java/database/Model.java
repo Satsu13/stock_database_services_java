@@ -1,4 +1,4 @@
 package database;
 
-public class Model {
+public class Model extends BaseTable {
 }

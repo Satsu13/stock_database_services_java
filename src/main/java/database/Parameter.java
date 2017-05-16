@@ -1,4 +1,4 @@
 package database;
 
-public class Parameter {
+public class Parameter extends BaseTable {
 }

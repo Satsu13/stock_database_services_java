@@ -1,4 +1,4 @@
 package database;
 
-public class Argument {
+public class Argument extends BaseTable {
 }

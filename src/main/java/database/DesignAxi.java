@@ -1,4 +1,4 @@
 package database;
 
-public class DesignAxi {
+public class DesignAxi extends BaseTable {
 }

@@ -1,4 +1,4 @@
 package database;
 
-public class MatureInvestment {
+public class MatureInvestment extends BaseTable {
 }

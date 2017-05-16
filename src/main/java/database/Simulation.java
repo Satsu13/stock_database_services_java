@@ -1,4 +1,4 @@
 package database;
 
-public class Simulation {
+public class Simulation extends BaseTable {
 }
