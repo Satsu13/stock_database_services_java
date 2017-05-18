@@ -3,6 +3,6 @@ package database.result_data;
 import com.github.jasminb.jsonapi.annotations.Type;
 import database.BaseTable;
 
-@Type("argument")
+@Type("arguments")
 public class Argument extends BaseTable {
 }
