@@ -5,16 +5,16 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static config.TestConfiguration.IP;
+import static config.TestConfiguration.PORT;
+
 @Ignore
 public class StockDatabaseTest {
     //   http://jsonapi.org/examples/     <---- example of including resources in url
 
-    public static final String IP = "192.168.99.100";
-    public static final int PORT = 3000;
-
     @Test
     public void testRailsDefault() throws Exception {
-        testResponse("stock-histories/1", "stock-days");
+        testResponse("stock-histories", "stock-days");
     }
 
     private void testResponse(String resource, String... includes) throws UnirestException {
@@ -49,6 +49,6 @@ public class StockDatabaseTest {
     }
 
     private void printResponse(JsonNode response) {
-        System.out.println(response.toString());
+        System.out.println(response.getObject().toString(7));
     }
 }
