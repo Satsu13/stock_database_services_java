@@ -14,7 +14,7 @@ public class StockDatabaseTest {
 
     @Test
     public void testRailsDefault() throws Exception {
-        testResponse("stock-histories", "stock-days");
+        testResponse("stock-histories", "stock-days.stock-history");
     }
 
     private void testResponse(String resource, String... includes) throws UnirestException {
