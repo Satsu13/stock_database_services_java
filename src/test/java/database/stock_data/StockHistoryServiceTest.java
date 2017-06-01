@@ -19,23 +19,27 @@ public class StockHistoryServiceTest {
     }
 
     @Test
-    public void testGetStockHistories() throws Exception {
-        List<StockHistory> stockHistories = stockHistoryService.getStockHistories();
-        assertEquals(stockHistories.size(), 2);
-    }
-
-    @Test
     public void testGetStockHistory() throws Exception {
         StockHistory stockHistory = stockHistoryService.getStockHistory(1);
-        assertEquals(stockHistory.getTicker(), "test_history_1");
-        assertEquals(stockHistory.getStockDays().size(), 2);
+        testFirstStockHistory(stockHistory);
     }
 
-    @Test
-    public void testStockHistoriesDaysAreComplete() throws Exception {
-        StockHistory stockHistory = stockHistoryService.getStockHistory(1);
+    private void testFirstStockHistory(StockHistory stockHistory) {
+        assertEquals(stockHistory.getTicker(), "test_history_1");
+        assertEquals(stockHistory.getStockDays().size(), 2);
+        testFirstStockHistoriesDays(stockHistory);
+    }
+
+    private void testFirstStockHistoriesDays(StockHistory stockHistory) {
         StockDay day = stockHistory.getStockDays().get(0);
         assertEquals(day.getValue(), 5, 0.0001);
         assertEquals(day.getDate(), "2015-06-22");
+    }
+
+    @Test
+    public void testGetStockHistories() throws Exception {
+        List<StockHistory> stockHistories = stockHistoryService.getStockHistories();
+        assertEquals(stockHistories.size(), 2);
+        testFirstStockHistory(stockHistories.get(0));
     }
 }

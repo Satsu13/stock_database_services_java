@@ -44,8 +44,8 @@ public class JSONAPIService {
     }
 
     private <T> List<T> tryGettingResourceCollection(String resource, Class<T> resourceClass) throws UnirestException {
-        HttpResponse<InputStream> response = getRequest(resource).asBinary();
-        ResourceConverter converter = new ResourceConverter(resourceClass);
+        HttpResponse<InputStream> response = getRequest(resource + "/" + "?include=stock-days").asBinary();
+        ResourceConverter converter = new ResourceConverter(resourceClass, StockDay.class);
         JSONAPIDocument<List<T>> jsonapiDocument = converter.readDocumentCollection(response.getBody(), resourceClass);
         return jsonapiDocument.get();
     }
