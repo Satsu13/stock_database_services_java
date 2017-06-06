@@ -3,8 +3,6 @@ package services;
 import com.github.jasminb.jsonapi.ResourceConverter;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.request.GetRequest;
 import database.stock_data.StockDay;
 
 import java.lang.reflect.Field;
@@ -16,6 +14,14 @@ public class BaseJSONAPIService {
     public BaseJSONAPIService(String ip, int port) {
         this.ip = ip;
         this.port = port;
+    }
+
+    protected String getBaseResourceString(Class resourceClass) {
+        return buildURL() + getResourceString(resourceClass);
+    }
+
+    protected String buildURL() {
+        return "HTTP://" + ip + ":" + port + "/";
     }
 
     protected String getResourceString(Class resourceClass) {
@@ -47,10 +53,6 @@ public class BaseJSONAPIService {
             }
         }
         return includes.substring(0, includes.length() - 1);
-    }
-
-    protected GetRequest makeGetRequest(String route) {
-        return Unirest.get("HTTP://" + ip + ":" + port + "/" + route);
     }
 
     protected  <T> ResourceConverter buildConverter(Class<T> resourceClass) {

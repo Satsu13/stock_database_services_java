@@ -3,6 +3,7 @@ package services;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
 import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.InputStream;
@@ -30,10 +31,10 @@ public class JSONAPIService extends BaseJSONAPIService {
     }
 
     private HttpResponse<InputStream> getResourceByID(Class resourceClass, int id) throws UnirestException {
-        String requestString = getResourceString(resourceClass);
+        String requestString = getBaseResourceString(resourceClass);
         requestString += buildIDString(id);
         requestString += buildIncludeString(resourceClass);
-        return makeGetRequest(requestString).asBinary();
+        return Unirest.get(requestString).asBinary();
     }
 
     private String buildIDString(int id) {
@@ -56,8 +57,8 @@ public class JSONAPIService extends BaseJSONAPIService {
     }
 
     private HttpResponse<InputStream> getCollectionResponse(Class resourceClass) throws UnirestException {
-        String requestString = getResourceString(resourceClass);
+        String requestString = getBaseResourceString(resourceClass);
         requestString += buildIncludeString(resourceClass);
-        return makeGetRequest(requestString).asBinary();
+        return Unirest.get(requestString).asBinary();
     }
 }
