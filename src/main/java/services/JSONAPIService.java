@@ -3,54 +3,61 @@ package services;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.GetRequest;
-import database.stock_data.StockDay;
 
 import java.io.InputStream;
 import java.util.List;
 
-public class JSONAPIService {
-    private String ip;
-    private int port;
+public class JSONAPIService extends BaseJSONAPIService {
 
     public JSONAPIService(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+        super(ip, port);
     }
 
-    protected <T> T getResource(String resource, int id, Class<T> resourceClass) {
+    protected <T> T getResource(Class<T> resourceClass, int id) {
         try {
-            return tryGettingResource(resource, id, resourceClass);
+            return tryGettingResource(resourceClass, id);
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private <T> T tryGettingResource(String resource, int id, Class<T> resourceClass) throws UnirestException {
-        HttpResponse<InputStream> response = getRequest(resource + "/" + id + "?include=stock-days").asBinary();
-        ResourceConverter converter = new ResourceConverter(resourceClass, StockDay.class);
+    protected  <T> T tryGettingResource(Class<T> resourceClass, int id) throws UnirestException {
+        HttpResponse<InputStream> response = getResourceByID(resourceClass, id);
+        ResourceConverter converter = buildConverter(resourceClass);
         JSONAPIDocument<T> jsonapiDocument = converter.readDocument(response.getBody(), resourceClass);
         return jsonapiDocument.get();
     }
 
-    protected <T> List<T> getResourceCollection(String resource, Class<T> resourceClass) {
+    private HttpResponse<InputStream> getResourceByID(Class resourceClass, int id) throws UnirestException {
+        String requestString = getResourceString(resourceClass);
+        requestString += buildIDString(id);
+        requestString += buildIncludeString(resourceClass);
+        return makeGetRequest(requestString).asBinary();
+    }
+
+    private String buildIDString(int id) {
+        return id + "/";
+    }
+
+    protected <T> List<T> getResourceCollection(Class<T> resourceClass) {
         try {
-            return tryGettingResourceCollection(resource, resourceClass);
+            return tryGettingResourceCollection(resourceClass);
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private <T> List<T> tryGettingResourceCollection(String resource, Class<T> resourceClass) throws UnirestException {
-        HttpResponse<InputStream> response = getRequest(resource + "/" + "?include=stock-days").asBinary();
-        ResourceConverter converter = new ResourceConverter(resourceClass, StockDay.class);
+    protected  <T> List<T> tryGettingResourceCollection(Class<T> resourceClass) throws UnirestException {
+        HttpResponse<InputStream> response = getCollectionResponse(resourceClass);
+        ResourceConverter converter = buildConverter(resourceClass);
         JSONAPIDocument<List<T>> jsonapiDocument = converter.readDocumentCollection(response.getBody(), resourceClass);
         return jsonapiDocument.get();
     }
 
-    private GetRequest getRequest(String route) {
-        return Unirest.get("HTTP://" + ip + ":" + port + "/" + route);
+    private HttpResponse<InputStream> getCollectionResponse(Class resourceClass) throws UnirestException {
+        String requestString = getResourceString(resourceClass);
+        requestString += buildIncludeString(resourceClass);
+        return makeGetRequest(requestString).asBinary();
     }
 }
