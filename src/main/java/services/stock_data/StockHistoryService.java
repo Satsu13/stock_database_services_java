@@ -1,6 +1,7 @@
-package services;
+package services.stock_data;
 
 import database.stock_data.StockHistory;
+import services.JSONAPIService;
 
 import java.util.List;
 
@@ -10,10 +11,10 @@ public class StockHistoryService extends JSONAPIService {
     }
 
     public StockHistory getStockHistory(int id) {
-        return getResource("stock-histories", id, StockHistory.class);
+        return getResource(StockHistory.class, id);
     }
 
     public List<StockHistory> getStockHistories() {
-        return getResourceCollection("stock-histories", StockHistory.class);
+        return getResourceCollection(StockHistory.class);
     }
 }

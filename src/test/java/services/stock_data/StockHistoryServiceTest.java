@@ -1,8 +1,9 @@
-package database.stock_data;
+package services.stock_data;
 
+import database.stock_data.StockDay;
+import database.stock_data.StockHistory;
 import org.junit.Before;
 import org.junit.Test;
-import services.StockHistoryService;
 
 import java.util.List;
 
